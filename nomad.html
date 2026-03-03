@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-X | Custom AI Solutions for Your Studio</title>
+    <style>
+        :root {
+            --primary: #ffffff;
+            --bg-color: #0a0a0a;
+            --accent: #C4B009;
+            /* Updated to your custom gold/orange brand color */
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --card-bg: #171717;
+            --border: #262626;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            /* 🚨 Crucial: Adds space at the bottom so the floating widget doesn't cover the footer */
+            padding-bottom: 150px;
+        }
+
+        /* Container & Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .client-badge {
+            background-color: var(--card-bg);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Demo Pointer Section */
+        .demo-pointer {
+            background: linear-gradient(180deg, var(--bg-color) 0%, #1a1a1a 100%);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 0 auto 80px;
+            max-width: 700px;
+            box-shadow: 0 0 30px rgba(196, 176, 9, 0.1);
+        }
+
+        .demo-pointer h2 {
+            margin-top: 0;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Bouncing Arrow Animation to point to your widget */
+        .bounce-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+            margin-top: 20px;
+        }
+
+        /* --- CTA Button --- */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            /* Uses your custom gold color */
+            color: #000000;
+            padding: 16px 36px;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-decoration: none;
+            margin-top: 35px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 15px rgba(196, 176, 9, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(196, 176, 9, 0.4);
+        }
+
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-15px);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 32px;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .feature-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        /* Guarantee Section */
+        .guarantee {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .guarantee h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .guarantee p {
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Contact<span>-X</span></div>
+            <div class="client-badge">Prepared exclusively for <strong>Nomad Studio</strong></div>
+        </header>
+
+        <section class="hero">
+            <h1 id="headings">The Autonomous Studio Manager</h1>
+            <p>Recover lost revenue and buy back 10 hours of your week. We transform your studio's operations from
+                manual admin to seamless automation.</p>
+        </section>
+
+        <section class="demo-pointer">
+            <h2>🟢 Live AI Demo Active</h2>
+            <p>Your custom AI Concierge is currently running on this page. Look at the bottom center of your screen,
+                click the widget, and try asking her about studio rates or booking a party.</p>
+            <div class="bounce-arrow">↓</div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <span class="feature-number">Phase 01 / The Capture</span>
+                <h3>24/7 Voice & Web Concierge</h3>
+                <p>You never miss a booking again. Whether a producer calls at 2:00 PM while you are on set, or a
+                    photographer visits your site at 2:00 AM, the AI answers instantly, answers specific questions about
+                    your space, and qualifies the lead.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-number">Phase 02 / The Command Center</span>
+                <h3>Instant Slack & CRM Routing</h3>
+                <p>High-value commercial leads shouldn't get lost in your email inbox. The second the AI identifies a
+                    premium booking, it instantly pings your phone via Slack or texts you the client's direct contact
+                    info so you can close the deal.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-number">Phase 03 / The Conversion</span>
+                <h3>Frictionless Calendar Sync</h3>
+                <p>Zero back-and-forth emails. Once the AI verifies they are a fit (and not throwing a frat party), it
+                    checks your live availability and books them directly into your calendar. You just wake up and see
+                    new revenue on your schedule.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-number">Phase 04 / The Reactivation</span>
+                <h3>Automated Lead Nurturing</h3>
+                <p>If a client asks about pricing but doesn't book, they aren't lost forever. The system automatically
+                    sends a polite SMS or email 24 hours later asking if they need help finalizing their shoot,
+                    recovering up to 20% of abandoned bookings.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="feature-number">Phase 05 / The Retention</span>
+                <h3>White-Glove Handover</h3>
+                <p>The second they book, the system automatically fires off a branded confirmation email with your
+                    studio's access codes, freight elevator rules, and parking details. Complete peace of mind for the
+                    client, zero manual typing for you.</p>
+            </div>
+        </section>
+
+        <section class="guarantee">
+            <h2>The 14-Day Zero-Risk Pilot</h2>
+            <p>I will deploy the custom Contact-X system for your studio for 14 days. Let it answer your calls and
+                website chats. If it doesn't save you at least 10 hours of manual admin work and secure bookings you
+                would have otherwise missed, we turn it off and you pay nothing.</p>
+            <a href="mailto:mitchel.growthpartner@gmail.com?subject=I'm%20in!%20Claiming%20my%2014-Day%20Pilot&body=Hi%20Mitchel,%0A%0AI'm%20ready%20to%20test%20drive%20Contact-X%20for%20my%20studio.%20Let's%20get%20started!%0A%0AThanks,"
+                class="cta-button">
+                Claim My 14-Day Pilot
+            </a>
+        </section>
+
+        <footer>
+            &copy; 2026 Contact-X Technologies. All rights reserved.
+        </footer>
+    </div>
+    <style>
+        /* --- Widget CSS --- */
+        #cx-mic-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            position: relative;
+            pointer-events: auto;
+        }
+
+        .cx-side-box {
+            background-color: #e8e8e8;
+            width: 178px;
+            box-sizing: border-box;
+            padding: 12px 10px;
+            color: #222;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-align: center;
+            white-space: nowrap;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .cx-left {
+            border-radius: 12px 0 0 12px;
+            padding-right: 40px;
+            margin-right: -25px;
+        }
+
+        .cx-right {
+            border-radius: 0 12px 12px 0;
+            padding-left: 40px;
+            margin-left: -25px;
+        }
+
+        #cx-mic-wrapper {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #cx-mic-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #cx-chat-popup {
+            position: relative;
+            width: 390px;
+            height: 450px;
+            background: linear-gradient(180deg, #dcd0ea 0%, #e8e8e8 12%, #e8e8e8 100%);
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px -10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            z-index: 10;
+            margin-bottom: -38px;
+            padding-bottom: 45px;
+            transform-origin: bottom center;
+            clip-path: inset(0% 0 0 0);
+            /* 🚨 ADD THIS LINE: */
+            pointer-events: auto;
+            transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+
+        .cx-hidden {
+            opacity: 0;
+            pointer-events: none;
+            clip-path: inset(100% 0 0 0) !important;
+            transform: none !important;
+        }
+
+        #cx-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: none;
+        }
+
+        #cx-chat-messages::-webkit-scrollbar {
+            display: none;
+        }
+
+        .cx-message {
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 82%;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14.5px;
+            line-height: 1.4;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .ai-message {
+            background-color: #000000;
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background-color: #ffffff;
+            color: #000000;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: transparent;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1.5px solid #000000;
+            border-radius: 30px;
+            outline: none;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            background-color: #ffffff;
+            transition: box-shadow 0.2s;
+        }
+
+        #cx-text-input:focus {
+            box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #cx-send-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+
+        #cx-send-btn:hover {
+            transform: scale(1.15) translateX(2px);
+        }
+
+        .speaking-pulse {
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cx-side-box {
+                display: none;
+            }
+
+            #cx-mic-wrapper {
+                width: 65px;
+                height: 65px;
+            }
+
+            #cx-chat-popup {
+                width: 90vw;
+                margin-bottom: 10px;
+                padding-bottom: 20px;
+            }
+        }
+    </style>
+
+    <div id="cx-widget-wrapper"
+        style="position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;pointer-events: none;">
+
+        <div id="cx-chat-popup" class="cx-hidden">
+            <div id="cx-chat-messages">
+                <div class="cx-message ai-message">Hi there! I'm Morgan. How can I help you today?</div>
+            </div>
+
+            <div id="cx-chat-input-area">
+                <input type="text" id="cx-text-input" placeholder="Enter text here..." autocomplete="off">
+                <button id="cx-send-btn">➤</button>
+            </div>
+        </div>
+
+        <div id="cx-mic-container">
+            <div class="cx-side-box cx-left">
+                <span class="cx-status-text">Morgan AI<br>Studio Concierge</span>
+            </div>
+
+            <div id="cx-mic-wrapper">
+                <img id="cx-mic-icon" src="mic-off.png" alt="Morgan AI">
+            </div>
+
+            <div class="cx-side-box cx-right">
+                <span class="cx-status-text">Instant Booking<br>& Questions</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('click', (event) => {
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+            if (!chatPopup.classList.contains('cx-hidden') && !widgetWrapper.contains(event.target)) {
+                chatPopup.classList.add('cx-hidden');
+                if (recognition && isListening) {
+                    try { recognition.stop(); } catch (e) { }
+                    isListening = false;
+                    updateText('Instant Booking<br>& Questions');
+                    micIcon.src = 'mic-off.png';
+                }
+            }
+        });
+
+        const micContainer = document.getElementById('cx-mic-container');
+        const micIcon = document.getElementById('cx-mic-icon');
+        const micWrapper = document.getElementById('cx-mic-wrapper');
+        const labels = document.querySelectorAll('.cx-status-text');
+        const chatPopup = document.getElementById('cx-chat-popup');
+        const chatMessages = document.getElementById('cx-chat-messages');
+        const chatInput = document.getElementById('cx-text-input');
+        const sendBtn = document.getElementById('cx-send-btn');
+
+        const CHAT_SERVER_URL = '/api/chat';
+        const currentSessionID = 'lead_' + Math.random().toString(36).substring(2, 15);
+
+        let isListening = false;
+        let currentAudio = null;
+
+        function updateText(newText) {
+            labels.forEach((label, index) => {
+                if (newText === 'Instant Booking<br>& Questions' && index === 0) {
+                    label.innerHTML = 'Morgan AI<br>Studio Concierge';
+                } else {
+                    label.innerHTML = newText;
+                }
+            });
+        }
+
+        function addChatMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('cx-message', sender === 'ai' ? 'ai-message' : 'user-message');
+            msgDiv.innerText = text;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function processUserInput(userText) {
+            addChatMessage(userText, 'user');
+            updateText('Thinking...');
+            micIcon.src = 'mic-off.png';
+
+            try {
+                const response = await fetch(CHAT_SERVER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userText, sessionID: currentSessionID, studio: 'nomad' })
+                });
+
+                const data = await response.json();
+
+                if (data.text) addChatMessage(data.text, 'ai');
+
+                if (data.audio) {
+                    const cleanAudioString = data.audio.replace(/\s/g, '');
+                    if (currentAudio) currentAudio.pause();
+
+                    currentAudio = new Audio(cleanAudioString);
+                    currentAudio.play().then(() => {
+                        updateText('Morgan is<br>Speaking');
+                        micWrapper.classList.add('speaking-pulse');
+                    }).catch(err => console.error("Browser Blocked Audio:", err));
+
+                    currentAudio.onended = () => {
+                        micWrapper.classList.remove('speaking-pulse');
+                        if (recognition) {
+                            updateText('Listening...');
+                            micIcon.src = 'mic-on.gif';
+                            isListening = true;
+                            try { recognition.start(); } catch (e) { }
+                        } else {
+                            updateText('Instant Booking<br>& Questions');
+                        }
+                    };
+                } else {
+                    updateText('Instant Booking<br>& Questions');
+                    isListening = false;
+                }
+            } catch (error) {
+                console.error("Server connection failed:", error);
+                updateText('Connection Failed');
+            }
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const text = chatInput.value.trim();
+            if (text) { processUserInput(text); chatInput.value = ''; }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const text = chatInput.value.trim();
+                if (text) { processUserInput(text); chatInput.value = ''; }
+            }
+        });
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                updateText('Listening...');
+                micIcon.src = 'mic-on.gif';
+            };
+            recognition.onresult = (event) => processUserInput(event.results[0][0].transcript);
+            recognition.onerror = () => {
+                updateText('Didn\'t catch that');
+                micIcon.src = 'mic-off.png';
+                isListening = false;
+            };
+        } else {
+            console.warn("Speech Recognition not supported. Falling back to text.");
+        }
+
+        micContainer.addEventListener('click', () => {
+            chatPopup.classList.remove('cx-hidden');
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                micWrapper.classList.remove('speaking-pulse');
+            }
+
+            if (recognition) {
+                if (!isListening) {
+                    isListening = true;
+                    try { recognition.start(); } catch (e) { }
+                } else {
+                    recognition.stop();
+                    isListening = false;
+                    updateText('Instant Booking<br>& Questions');
+                    micIcon.src = 'mic-off.png';
+                }
+            } else {
+                updateText('Type below<br>to chat');
+            }
+        });
+    </script>
+</body>
+
+</html>
