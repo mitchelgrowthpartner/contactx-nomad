@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Demo | That Toronto Studio</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background-color: #111111;
+            /* Premium dark background */
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #C4B009;
+            /* The exact custom orange you picked */
+            font-weight: 400;
+            margin-bottom: 40px;
+        }
+
+        .demo-box {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: #C4B009;
+            font-weight: bold;
+        }
+    </style>
+    <style>
+        /* Forces the font to look premium */
+        #vfrc-widget {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        }
+
+        /* Sharpens the chat bubbles to remove the 'cheap chatbot' roundness */
+        .vfrc-message {
+            border-radius: 4px !important;
+        }
+
+        /* Adds the massive, enterprise-grade drop shadow to the chat window */
+        .vfrc-widget--chat {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
+            border: 1px solid #333 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>That Toronto Studio</h1>
+    <h2>Contact-X Autonomous Sandbox</h2>
+
+    <div class="demo-box">
+        <p><strong>Danny:</strong> Welcome to your isolated AI testing environment.</p>
+        <p>Click the <span class="highlight">Tap to Speak</span> widget in the bottom right corner to test the AI
+            concierge. Try asking to book a college party, or ask for standard studio rates.</p>
+    </div>
+    <script type="text/javascript">
+        (function (d, t) {
+            var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            v.onload = function () {
+                window.voiceflow.chat.load({
+                    verify: { projectID: '699b182bca4058de4c4af9bc' },
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production',
+                    voice: {
+                        url: "https://runtime-api.voiceflow.com"
+                    }
+                });
+            }
+            v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
+        })(document, 'script');
+    </script>
+
+    <style>
+        #cx-mic-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999999;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            transition: transform 0.2s ease-in-out;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #cx-mic-container:hover {
+            transform: translateX(-50%) scale(1.02);
+        }
+
+        /* The left and right text boxes */
+        .cx-side-box {
+            background-color: #e8e8e8;
+            /* 🚨 3. THE WIDTH LOCK MATH (178px + 178px + 85px circle - 50px overlap = EXACTLY 390px!) */
+            width: 178px;
+            box-sizing: border-box;
+            /* Stops padding from inflating the width */
+            padding: 12px 10px;
+            color: #222;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-align: center;
+            white-space: nowrap;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Keeps "Listening..." perfectly centered */
+            transition: background-color 0.2s;
+        }
+
+        /* Specific shaping to tuck them under the circle */
+        .cx-left {
+            border-radius: 12px 0 0 12px;
+            padding-right: 40px;
+            /* Extra padding so text isn't hidden by circle */
+            margin-right: -25px;
+            /* Pulls the circle over top of it */
+        }
+
+        .cx-right {
+            border-radius: 0 12px 12px 0;
+            padding-left: 40px;
+            margin-left: -25px;
+        }
+
+        /* The oversized center circle */
+        #cx-mic-wrapper {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            z-index: 2;
+            /* Forces the circle to sit on top of the side boxes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #cx-mic-icon {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* --- Chat Window Container --- */
+        /* --- Chat Window Container --- */
+        #cx-chat-popup {
+            position: relative;
+            width: 390px;
+            height: 450px;
+            background: linear-gradient(180deg, #dcd0ea 0%, #e8e8e8 12%, #e8e8e8 100%);
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0px -10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            z-index: 10;
+
+            /* 🚨 1. THE DOCKING MATH */
+            margin-bottom: -22px;
+            /* Pulls it down to perfectly touch the wings */
+            padding-bottom: 45px;
+            /* Pushes the text input field UP so the circle never covers it */
+
+            /* 🚨 2. THE PREMIUM EXPANSION ANIMATION */
+            transform-origin: bottom center;
+            clip-path: inset(0% 0 0 0);
+            /* Fully open */
+            transition: clip-path 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+        }
+
+        /* 🚨 The new animation hidden state (Expands from the bottom up) */
+        .cx-hidden {
+            opacity: 0;
+            pointer-events: none;
+            clip-path: inset(100% 0 0 0) !important;
+            /* Crops the window to the absolute bottom line */
+            transform: none !important;
+            /* Removes the old floating slide effect */
+        }
+
+        /* --- The Scrollable Messages Area --- */
+        #cx-chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: none;
+            /* Hides scrollbar in Firefox */
+        }
+
+        /* Hides scrollbar in Chrome/Safari for a native app feel */
+        #cx-chat-messages::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* --- Base Message Style --- */
+        .cx-message {
+            padding: 12px 18px;
+            border-radius: 20px;
+            max-width: 82%;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14.5px;
+            line-height: 1.4;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        /* AI Message (Black bubble, left aligned) */
+        .ai-message {
+            background-color: #000000;
+            color: #ffffff;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            /* Creates the "chat tail" effect */
+        }
+
+        /* User Message (White bubble, right aligned) */
+        .user-message {
+            background-color: #ffffff;
+            color: #000000;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            /* Creates the "chat tail" effect */
+        }
+
+        /* --- Text Input Area --- */
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: transparent;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1.5px solid #000000;
+            /* Crisp black border from mockup */
+            border-radius: 30px;
+            outline: none;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            background-color: #ffffff;
+            transition: box-shadow 0.2s;
+        }
+
+        #cx-text-input:focus {
+            box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        #cx-send-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-send-btn:hover {
+            transform: scale(1.15) translateX(2px);
+        }
+
+        /* --- THE PULSE ANIMATION FOR THE MIC --- */
+        .speaking-pulse {
+            animation: pulse-ring 1.5s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+    </style>
+
+    <div id="cx-widget-wrapper"
+        style="position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); z-index: 999999; display: flex; flex-direction: column; align-items: center; justify-content: flex-end;">
+
+        <div id="cx-chat-popup" class="cx-hidden">
+            <div id="cx-chat-messages">
+                <div class="cx-message ai-message">Hi there! I'm Morgan. How can I help you today?</div>
+            </div>
+
+            <div id="cx-chat-input-area">
+                <input type="text" id="cx-text-input" placeholder="Enter text here..." autocomplete="off">
+                <button id="cx-send-btn">➤</button>
+            </div>
+        </div>
+
+        <div id="cx-mic-container"
+            style="display: flex; align-items: center; cursor: pointer; z-index: 20; position: relative;">
+            <div class="cx-side-box cx-left">
+                <span class="cx-status-text">Instant Booking<br>& Questions</span>
+            </div>
+
+            <div id="cx-mic-wrapper">
+                <img id="cx-mic-icon" src="unnamed-removebg-preview (1).png" alt="Jordan AI">
+            </div>
+
+            <div class="cx-side-box cx-right">
+                <span class="cx-status-text">Instant Booking<br>& Questions</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- <script>
+        const micContainer = document.getElementById('cx-mic-container');
+        const micIcon = document.getElementById('cx-mic-icon');
+        const labels = document.querySelectorAll('.cx-status-text');
+
+        function updateText(newText) {
+            labels.forEach(label => label.innerHTML = newText);
+        }
+
+        // Point this to your new local Node.js server!
+        const CHAT_SERVER_URL = 'http://localhost:3000/api/chat';
+
+        // Generate a unique, random ID for this specific visitor's session
+        const currentSessionID = 'lead_' + Math.random().toString(36).substring(2, 15);
+
+        let isListening = false;
+        let currentAudio = null; // Keeps track of Jordan's voice so we can interrupt him
+
+        // 1. Setup Native Browser Speech-to-Text
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false; // We only want the final sentence
+
+        // When the microphone successfully starts listening
+        recognition.onstart = () => {
+            updateText('Listening...');
+            micIcon.src = 'assistant-ezgif.com-optimize.gif'; // Turn on the animation
+        };
+
+        // When you finish speaking, the browser triggers this instantly
+        recognition.onresult = async (event) => {
+            const userText = event.results[0][0].transcript;
+            console.log("🗣️ You said:", userText);
+
+            updateText('Thinking...');
+            micIcon.src = 'unnamed-removebg-preview (1).png'; // Turn off animation while waiting
+
+            try {
+                // 2. Send your text to the Bouncer (your Node server)
+                const response = await fetch(CHAT_SERVER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: userText,
+                        sessionID: currentSessionID // 🚨 THE FIX: Voiceflow will now isolate this user!
+                    })
+                });
+
+                const data = await response.json();
+                console.log("🧠 Voiceflow replied:", data.text);
+
+                // 3. Play the high-quality MP3 response
+                if (data.audio) {
+                    console.log("🎵 Received audio link/data. Attempting to play...");
+
+                    // Strip out any hidden newlines or spaces that might corrupt the base64 string
+                    const cleanAudioString = data.audio.replace(/\s/g, '');
+
+                    if (currentAudio) currentAudio.pause();
+
+                    // Create the audio object
+                    currentAudio = new Audio(cleanAudioString);
+
+                    // 🚨 THE FIX: Force the browser to explain why it won't play
+                    currentAudio.play().then(() => {
+                        console.log("▶️ Audio is successfully playing out loud!");
+                        updateText('Morgan is<br>Speaking');
+                    }).catch(err => {
+                        console.error("❌ BROWSER AUDIO ERROR:", err.name, err.message);
+                        updateText('Browser Blocked<br>Audio');
+                    });
+
+                    currentAudio.onended = () => {
+                        updateText('Instant Booking<br>& Questions');
+                        isListening = false;
+                    };
+                } else {
+                    console.warn("⚠️ Voiceflow replied, but the audio string was empty.");
+                    updateText('Instant Booking<br>& Questions');
+                    isListening = false;
+                }
+
+            } catch (error) {
+                console.error("Server connection failed:", error);
+                updateText('Connection<br>Failed');
+                setTimeout(() => {
+                    updateText('Instant Booking<br>& Questions');
+                    isListening = false;
+                }, 2000);
+            }
+        };
+
+        // Handle silence or errors
+        recognition.onerror = (event) => {
+            console.error("Speech recognition error:", event.error);
+            updateText('Didn\'t catch<br>that');
+            setTimeout(() => {
+                updateText('Instant Booking<br>& Questions');
+                micIcon.src = 'unnamed-removebg-preview (1).png';
+                isListening = false;
+            }, 2000);
+        };
+
+        // 4. The Click Event (Start / Stop)
+        micContainer.addEventListener('click', () => {
+            // Interrupt Jordan if he is currently speaking
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            if (!isListening) {
+                isListening = true;
+                try {
+                    recognition.start(); // This triggers the browser Mic popup!
+                } catch (e) {
+                    console.log("Already started");
+                }
+            } else {
+                recognition.stop();
+                isListening = false;
+                updateText('Instant Booking<br>& Questions');
+                micIcon.src = 'unnamed-removebg-preview (1).png';
+            }
+        });
+    </script>-->
+
+    <script>
+
+        // --- Click Outside to Close ---
+        document.addEventListener('click', (event) => {
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+
+            // If the chat is open, AND the user clicked outside the widget
+            if (!chatPopup.classList.contains('cx-hidden') && !widgetWrapper.contains(event.target)) {
+
+                // 1. Hide the chat window
+                chatPopup.classList.add('cx-hidden');
+
+                // 2. Stop the microphone so Morgan doesn't accidentally eavesdrop
+                if (isListening) {
+                    try { recognition.stop(); } catch (e) { }
+                    isListening = false;
+                    updateText('Instant Booking<br>& Questions');
+                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                }
+            }
+        });
+
+        // --- Elements ---
+        const micContainer = document.getElementById('cx-mic-container');
+        const micIcon = document.getElementById('cx-mic-icon');
+        const micWrapper = document.getElementById('cx-mic-wrapper'); // Needed for the pulse!
+        const labels = document.querySelectorAll('.cx-status-text');
+
+        const chatPopup = document.getElementById('cx-chat-popup');
+        const chatMessages = document.getElementById('cx-chat-messages');
+        const chatInput = document.getElementById('cx-text-input');
+        const sendBtn = document.getElementById('cx-send-btn');
+
+        const CHAT_SERVER_URL = 'http://localhost:3000/api/chat';
+        const currentSessionID = 'lead_' + Math.random().toString(36).substring(2, 15);
+
+        let isListening = false;
+        let currentAudio = null;
+
+        // --- UI Helper Functions ---
+        function updateText(newText) {
+            labels.forEach(label => label.innerHTML = newText);
+        }
+
+        // Creates the Black (AI) and White (User) Chat Bubbles
+        function addChatMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('cx-message');
+            msgDiv.classList.add(sender === 'ai' ? 'ai-message' : 'user-message');
+            msgDiv.innerText = text;
+            chatMessages.appendChild(msgDiv);
+
+            // Auto-scroll to the bottom of the chat
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // --- THE MASTER AI LOGIC ---
+        // Both typing and speaking funnel through this function
+        async function processUserInput(userText) {
+            // 1. Show the user's message in the chat
+            addChatMessage(userText, 'user');
+
+            updateText('Thinking...');
+            micIcon.src = 'unnamed-removebg-preview (1).png';
+
+            try {
+                // 2. Ask Voiceflow
+                const response = await fetch(CHAT_SERVER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userText, sessionID: currentSessionID })
+                });
+
+                const data = await response.json();
+
+                // 3. Print Morgan's answer in the chat window
+                if (data.text) {
+                    addChatMessage(data.text, 'ai');
+                }
+
+                // 4. Play Morgan's Voice & Trigger the Pulse!
+                if (data.audio) {
+                    const cleanAudioString = data.audio.replace(/\s/g, '');
+                    if (currentAudio) currentAudio.pause();
+
+                    currentAudio = new Audio(cleanAudioString);
+
+                    currentAudio.play().then(() => {
+                        updateText('Morgan is<br>Speaking');
+                        micWrapper.classList.add('speaking-pulse'); // Start the CSS pulse!
+                    }).catch(err => console.error("Browser Blocked Audio:", err));
+
+                    // THE AUTO-WAKE LOOP
+                    // THE AUTO-WAKE LOOP (With Firefox Safety Check)
+                    currentAudio.onended = () => {
+                        micWrapper.classList.remove('speaking-pulse'); // Stop the pulse!
+
+                        // Only try to wake the mic if the browser supports it!
+                        if (recognition) {
+                            updateText('Listening...');
+                            micIcon.src = 'assistant-ezgif.com-optimize.gif';
+                            isListening = true;
+                            try {
+                                recognition.start();
+                            } catch (e) {
+                                console.log("Mic is already running.");
+                            }
+                        } else {
+                            updateText('Instant Booking<br>& Questions');
+                        }
+                    };
+                } else {
+                    updateText('Instant Booking<br>& Questions');
+                    isListening = false;
+                }
+            } catch (error) {
+                console.error("Server connection failed:", error);
+                updateText('Connection Failed');
+            }
+        }
+
+        // --- Text Chat Listeners ---
+        // Triggered when user clicks Send
+        sendBtn.addEventListener('click', () => {
+            const text = chatInput.value.trim();
+            if (text) {
+                processUserInput(text);
+                chatInput.value = ''; // Clear the box
+            }
+        });
+
+        // Triggered when user hits 'Enter' on the keyboard
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const text = chatInput.value.trim();
+                if (text) {
+                    processUserInput(text);
+                    chatInput.value = '';
+                }
+            }
+        });
+
+        // --- Microphone / Voice Listeners (Firefox Safe) ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null; // Default to null
+
+        // ONLY set up the microphone if the browser actually supports it
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                updateText('Listening...');
+                micIcon.src = 'assistant-ezgif.com-optimize.gif';
+            };
+
+            recognition.onresult = (event) => {
+                const userText = event.results[0][0].transcript;
+                processUserInput(userText);
+            };
+
+            recognition.onerror = () => {
+                updateText('Didn\'t catch that');
+                micIcon.src = 'unnamed-removebg-preview (1).png';
+                isListening = false;
+            };
+        } else {
+            console.warn("🎙️ Speech Recognition is not supported in this browser. Falling back to text-only mode.");
+        }
+
+        // --- Main Click Event (Opens Chat & Toggles Mic) ---
+        micContainer.addEventListener('click', () => {
+            // 1. Unhide the chat window!
+            chatPopup.classList.remove('cx-hidden');
+
+            // 2. Stop audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                micWrapper.classList.remove('speaking-pulse');
+            }
+
+            // 3. ONLY try to use the microphone if the browser supports it
+            if (recognition) {
+                if (!isListening) {
+                    isListening = true;
+                    try { recognition.start(); } catch (e) { }
+                } else {
+                    recognition.stop();
+                    isListening = false;
+                    updateText('Instant Booking<br>& Questions');
+                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                }
+            } else {
+                // Firefox Fallback: Just update the text to let them know to type
+                updateText('Type below<br>to chat');
+            }
+        });
+
+        // --- Click Outside to Close ---
+        document.addEventListener('click', (event) => {
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+
+            if (!chatPopup.classList.contains('cx-hidden') && !widgetWrapper.contains(event.target)) {
+                chatPopup.classList.add('cx-hidden');
+
+                // Only stop recognition if it exists
+                if (recognition && isListening) {
+                    try { recognition.stop(); } catch (e) { }
+                    isListening = false;
+                    updateText('Instant Booking<br>& Questions');
+                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
