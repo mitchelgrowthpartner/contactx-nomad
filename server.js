@@ -90,3 +90,6 @@ app.post('/api/chat', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Secure Contact-X Server running on port ${PORT}`));
+
+// 🚨 ADD THIS LINE FOR VERCEL:
+module.exports = app;
