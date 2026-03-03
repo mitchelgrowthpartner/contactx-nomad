@@ -9,8 +9,25 @@ app.use(express.json());
 const VOICEFLOW_API_KEY = process.env.VOICEFLOW_API_KEY || 'xxxxxxxxxxx';
 
 app.post('/api/chat', async (req, res) => {
-    const { message, sessionID = 'contactx_demo_user' } = req.body;
+    // 1. Grab the message, sessionID, AND the new studio name tag
+    const { message, sessionID = 'contactx_demo', studio = 'default' } = req.body;
 
+    // 2. The Smart Router: Pick the correct key based on the name tag
+    let activeApiKey;
+    
+    if (studio === 'toronto') {
+        activeApiKey = process.env.VF_KEY_TORONTO;
+    } else if (studio === 'nomad') {
+        activeApiKey = process.env.VF_KEY_NOMAD;
+    } else {
+        // Fallback just in case something goes wrong
+        activeApiKey = process.env.VOICEFLOW_API_KEY; 
+    }
+
+    // Security check: Make sure a key actually exists
+    if (!activeApiKey) {
+        return res.status(500).json({ text: "Error: Studio API key not configured." });
+    }
     if (!message) {
         return res.status(400).json({ error: "Message is required" });
     }
@@ -19,7 +36,7 @@ app.post('/api/chat', async (req, res) => {
         const vfResponse = await fetch(`https://general-runtime.voiceflow.com/state/user/${sessionID}/interact`, {
             method: 'POST',
             headers: {
-                'Authorization': VOICEFLOW_API_KEY,
+                'Authorization': activeApiKey,
                 'versionID': 'development', // 🚨 Changed to Development to pull your latest canvas instantly!
                 'Content-Type': 'application/json',
                 'accept': 'application/json'
