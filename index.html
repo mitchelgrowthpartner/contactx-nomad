@@ -348,7 +348,7 @@
             </div>
 
             <div id="cx-mic-wrapper">
-                <img id="cx-mic-icon" src="unnamed-removebg-preview (1).png" alt="Jordan AI">
+                <img id="cx-mic-icon" src="mic-off.png" alt="Jordan AI">
             </div>
 
             <div class="cx-side-box cx-right">
@@ -394,7 +394,7 @@
             console.log("🗣️ You said:", userText);
 
             updateText('Thinking...');
-            micIcon.src = 'unnamed-removebg-preview (1).png'; // Turn off animation while waiting
+            micIcon.src = 'mic-off.png'; // Turn off animation while waiting
 
             try {
                 // 2. Send your text to the Bouncer (your Node server)
@@ -457,7 +457,7 @@
             updateText('Didn\'t catch<br>that');
             setTimeout(() => {
                 updateText('Instant Booking<br>& Questions');
-                micIcon.src = 'unnamed-removebg-preview (1).png';
+                micIcon.src = 'mic-off.png';
                 isListening = false;
             }, 2000);
         };
@@ -481,7 +481,7 @@
                 recognition.stop();
                 isListening = false;
                 updateText('Instant Booking<br>& Questions');
-                micIcon.src = 'unnamed-removebg-preview (1).png';
+                micIcon.src = 'mic-off.png';
             }
         });
     </script>-->
@@ -503,7 +503,7 @@
                     try { recognition.stop(); } catch (e) { }
                     isListening = false;
                     updateText('Instant Booking<br>& Questions');
-                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                    micIcon.src = 'mic-off.png';
                 }
             }
         });
@@ -549,7 +549,7 @@
             addChatMessage(userText, 'user');
 
             updateText('Thinking...');
-            micIcon.src = 'unnamed-removebg-preview (1).png';
+            micIcon.src = 'mic-off.png';
 
             try {
                 // 2. Ask Voiceflow
@@ -650,7 +650,7 @@
 
             recognition.onerror = () => {
                 updateText('Didn\'t catch that');
-                micIcon.src = 'unnamed-removebg-preview (1).png';
+                micIcon.src = 'mic-off.png';
                 isListening = false;
             };
         } else {
@@ -678,7 +678,7 @@
                     recognition.stop();
                     isListening = false;
                     updateText('Instant Booking<br>& Questions');
-                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                    micIcon.src = 'mic-off.png';
                 }
             } else {
                 // Firefox Fallback: Just update the text to let them know to type
@@ -698,7 +698,7 @@
                     try { recognition.stop(); } catch (e) { }
                     isListening = false;
                     updateText('Instant Booking<br>& Questions');
-                    micIcon.src = 'unnamed-removebg-preview (1).png';
+                    micIcon.src = 'mic-off.png';
                 }
             }
         });
