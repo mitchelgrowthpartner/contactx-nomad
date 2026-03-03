@@ -385,7 +385,7 @@
         // When the microphone successfully starts listening
         recognition.onstart = () => {
             updateText('Listening...');
-            micIcon.src = 'assistant-ezgif.com-optimize.gif'; // Turn on the animation
+            micIcon.src = 'mic-on.gif'; // Turn on the animation
         };
 
         // When you finish speaking, the browser triggers this instantly
@@ -586,7 +586,7 @@
                         // Only try to wake the mic if the browser supports it!
                         if (recognition) {
                             updateText('Listening...');
-                            micIcon.src = 'assistant-ezgif.com-optimize.gif';
+                            micIcon.src = 'mic-on.gif';
                             isListening = true;
                             try {
                                 recognition.start();
@@ -640,7 +640,7 @@
 
             recognition.onstart = () => {
                 updateText('Listening...');
-                micIcon.src = 'assistant-ezgif.com-optimize.gif';
+                micIcon.src = 'mic-on.gif';
             };
 
             recognition.onresult = (event) => {
