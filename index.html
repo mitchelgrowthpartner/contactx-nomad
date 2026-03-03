@@ -556,7 +556,7 @@
                 const response = await fetch(CHAT_SERVER_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userText, sessionID: currentSessionID })
+                    body: JSON.stringify({ message: userText, sessionID: currentSessionID,studio: 'toronto' })
                 });
 
                 const data = await response.json();
