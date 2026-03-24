@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-X | Custom AI Concierge for ARRAS</title>
+    <meta name="description"
+        content="A custom autonomous venue concierge demo built exclusively for ARRAS Banquet & Events.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #FAFAFA;
+            --primary: #111111;
+            --accent: #9A8A78;
+            --accent-hover: #827260;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --card-bg: #FFFFFF;
+            --border: #EAEAEA;
+
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            padding-bottom: 150px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            font-family: var(--font-body);
+            font-weight: 400;
+            font-size: 1rem;
+            margin-left: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .client-badge {
+            background-color: var(--card-bg);
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .video-presentation {
+            max-width: 850px;
+            margin: 60px auto 20px auto;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .demo-pointer {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 0 auto 80px;
+            max-width: 700px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-pointer h2 {
+            margin-top: 0;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.8rem;
+        }
+
+        .bounce-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+            margin-top: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #ffffff;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-decoration: none;
+            margin-top: 35px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(154, 138, 120, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: var(--accent-hover);
+            box-shadow: 0 6px 20px rgba(154, 138, 120, 0.4);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 35px;
+            border-radius: 12px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: var(--shadow-sm);
+            opacity: 0;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 0;
+        }
+
+        .feature-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .guarantee {
+            text-align: center;
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .guarantee h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .guarantee p {
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-15px);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- LUXURY WIDGET CSS --- */
+        #cx-widget-wrapper {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            /* Moved to the right for a more natural chat feel */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-end;
+            pointer-events: none;
+        }
+
+        #cx-mic-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            position: relative;
+            pointer-events: auto;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-mic-container:hover {
+            transform: scale(1.05);
+        }
+
+        /* The New Monogram Launcher */
+        #cx-mic-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 2px solid var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        #cx-launcher-icon {
+            font-family: var(--font-heading);
+            font-size: 34px;
+            color: var(--accent);
+            font-weight: 400;
+            line-height: 1;
+            margin-top: -2px;
+            /* Optical alignment */
+        }
+
+        /* Pulse animation for when bot is listening/thinking */
+        .is-active #cx-mic-wrapper {
+            box-shadow: 0 0 20px 5px rgba(154, 138, 120, 0.4);
+            animation: softPulse 1.5s infinite alternate;
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 15px 2px rgba(154, 138, 120, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 0 25px 8px rgba(154, 138, 120, 0.6);
+            }
+        }
+
+        #cx-chat-popup {
+            position: relative;
+            width: 380px;
+            height: 520px;
+            max-height: 75vh;
+            background: #FFFFFF;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 10;
+            margin-bottom: 20px;
+            transform-origin: bottom right;
+            pointer-events: auto;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        #cx-chat-popup.cx-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Luxury Header */
+        .cx-chat-header {
+            padding: 20px 24px;
+            background: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cx-chat-header span {
+            font-family: var(--font-heading);
+            color: var(--accent);
+            font-size: 1.15rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .cx-close-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .cx-close-btn:hover {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        #cx-chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background-color: #FAFAFA;
+        }
+
+        .cx-message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-message {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid var(--border);
+        }
+
+        .user-message {
+            background-color: var(--primary);
+            color: var(--accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: #FFFFFF;
+            border-top: 1px solid var(--border);
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 14px;
+            background-color: #FAFAFA;
+            color: var(--primary);
+            transition: all 0.2s;
+        }
+
+        #cx-text-input:focus {
+            border-color: var(--accent);
+            background-color: #FFFFFF;
+        }
+
+        #cx-send-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-send-btn:hover {
+            transform: scale(1.05);
+            background-color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            #cx-widget-wrapper {
+                right: 20px;
+                bottom: 20px;
+            }
+
+            #cx-chat-popup {
+                width: calc(100vw - 40px);
+                height: 60vh;
+            }
+        }
+
+        /* ... KEEP YOUR EXISTING CSS UP TO THE ANIMATIONS ... */
+
+        /* --- THE HYBRID LUXURY WIDGET CSS --- */
+        #cx-widget-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            pointer-events: none;
+        }
+
+        #cx-mic-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            position: relative;
+            pointer-events: auto;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-mic-container:hover {
+            transform: scale(1.03);
+        }
+
+        .cx-side-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--accent);
+            width: 178px;
+            box-sizing: border-box;
+            padding: 12px 10px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.4;
+            text-align: center;
+            white-space: nowrap;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cx-left {
+            border-radius: 22px 0 0 22px;
+            padding-right: 40px;
+            margin-right: -25px;
+        }
+
+        .cx-right {
+            border-radius: 0 22px 22px 0;
+            padding-left: 40px;
+            margin-left: -25px;
+        }
+
+        #cx-mic-wrapper {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            border: 3px solid var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        #cx-launcher-icon {
+            font-family: var(--font-heading);
+            font-size: 34px;
+            color: var(--accent);
+            font-weight: 400;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        .is-active #cx-mic-wrapper {
+            box-shadow: 0 0 20px 5px rgba(154, 138, 120, 0.4);
+            animation: softPulse 1.5s infinite alternate;
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 15px 2px rgba(154, 138, 120, 0.3);
+            }
+
+            100% {
+                box-shadow: 0 0 25px 8px rgba(154, 138, 120, 0.6);
+            }
+        }
+
+        #cx-chat-popup {
+            position: relative;
+            width: 390px;
+            height: 520px;
+            max-height: 70vh;
+            background: #FFFFFF;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 10;
+            margin-bottom: -35px;
+            padding-bottom: 40px;
+            transform-origin: bottom center;
+            pointer-events: auto;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        #cx-chat-popup.cx-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        /* Luxury Header */
+        .cx-chat-header {
+            padding: 20px 24px;
+            background: var(--primary);
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cx-chat-header span {
+            font-family: var(--font-heading);
+            color: var(--accent);
+            font-size: 1.15rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .cx-close-btn {
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .cx-close-btn:hover {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        #cx-chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background-color: #FAFAFA;
+        }
+
+        .cx-message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-message {
+            background-color: #FFFFFF;
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid var(--border);
+        }
+
+        .user-message {
+            background-color: var(--primary);
+            color: var(--accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: #FFFFFF;
+            border-top: 1px solid var(--border);
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 14px;
+            background-color: #FAFAFA;
+            color: var(--primary);
+            transition: all 0.2s;
+        }
+
+        #cx-text-input:focus {
+            border-color: var(--accent);
+            background-color: #FFFFFF;
+        }
+
+        #cx-send-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-send-btn:hover {
+            transform: scale(1.05);
+            background-color: #000000;
+        }
+
+        @media (max-width: 768px) {
+            .cx-side-box {
+                display: none;
+            }
+
+            #cx-chat-popup {
+                width: 92vw;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                padding-bottom: 25px;
+            }
+
+            #cx-widget-wrapper {
+                bottom: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Contact-X <span>For ARRAS Events</span></div>
+            <div class="client-badge">Custom Deployment</div>
+        </header>
+
+        <main>
+            <section class="video-presentation">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Q8qjtFYB1to?rel=0&modestbranding=1" allowfullscreen
+                        title="Contact-X AI Demo for ARRAS"></iframe>
+                </div>
+            </section>
+
+            <section class="hero">
+                <h1>The Autonomous Venue Concierge</h1>
+                <p>Capture every event inquiry, qualify guest counts across all three spaces, and book tours
+                    instantly—so Juliana and the team can focus on the client experience.</p>
+            </section>
+
+            <section class="demo-pointer">
+                <h2>Live AI Concierge Active</h2>
+                <p>Your custom AI assistant is running below. Click the luxury monogram widget to try asking her about
+                    the Ballroom capacity, Chef Scott's catering, or booking a venue tour.</p>
+                <div class="bounce-arrow">↓</div>
+            </section>
+
+            <section class="features">
+                <article class="feature-card">
+                    <span class="feature-number">Phase 01 / The Capture</span>
+                    <h3>24/7 Event Concierge</h3>
+                    <p>You never miss an inquiry. Whether a corporate planner emails at 2:00 PM or a bride visits your
+                        site at midnight, the AI answers instantly, highlights your "blank-canvas" aesthetic, and
+                        qualifies the lead.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 02 / The Qualification</span>
+                    <h3>Instant Space Routing</h3>
+                    <p>The AI knows your venue. 350 guests? It pitches the Ballroom or Rooftop Terrace. 50 guests? It
+                        recommends the Piano Café. It even explains Chef Scott's in-house catering rules before you ever
+                        get on a call.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 03 / The Conversion</span>
+                    <h3>Frictionless Tour Booking</h3>
+                    <p>Zero back-and-forth emails. Once the AI verifies they are a good fit for ARRAS, it books the
+                        venue tour directly into Juliana's Google Calendar. You just wake up and see new site visits
+                        booked.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 04 / The Retention</span>
+                    <h3>White-Glove Handover</h3>
+                    <p>The second they book a tour, the system fires off a gorgeous, ARRAS-branded confirmation email
+                        with directions to West 7th Avenue and an introduction to your event packages.</p>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 Contact-X Technologies. Designed exclusively for ARRAS Banquet & Events.
+        </footer>
+    </div>
+
+    <div id="cx-widget-wrapper">
+        <div id="cx-chat-popup" aria-live="polite">
+            <div class="cx-chat-header">
+                <span>ARRAS Private Concierge</span>
+                <button class="cx-close-btn" id="cx-close-btn" aria-label="Close Chat">&times;</button>
+            </div>
+            <div id="cx-chat-messages">
+                <div class="cx-message ai-message">Welcome to ARRAS. I am the virtual concierge for our event team. Are
+                    you looking to inquire about a wedding, a corporate event, or a private venue tour?</div>
+            </div>
+            <div id="cx-chat-input-area">
+                <input type="text" id="cx-text-input" placeholder="Type your inquiry here..." autocomplete="off">
+                <button id="cx-send-btn" aria-label="Send message">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="cx-mic-container" role="button" tabindex="0" aria-label="Open AI Concierge">
+            <div class="cx-side-box cx-left">
+                <span class="cx-status-text">ARRAS AI<br>Venue Concierge</span>
+            </div>
+
+            <div id="cx-mic-wrapper">
+                <div id="cx-launcher-icon">A</div>
+            </div>
+
+            <div class="cx-side-box cx-right">
+                <span class="cx-status-text">Venue Tours<br>& Inquiries</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- VOICEFLOW DIRECT API SETUP ---
+            const VOICEFLOW_API_KEY = 'VF.DM.69beeb1686e2d9b43edbcbc8.CzPTQW0IeXiVzXEB';
+            const userID = 'arras_lead_' + Math.random().toString(36).substring(2, 15);
+
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+            const micContainer = document.getElementById('cx-mic-container');
+            const chatPopup = document.getElementById('cx-chat-popup');
+            const closeBtn = document.getElementById('cx-close-btn');
+            const chatMessages = document.getElementById('cx-chat-messages');
+            const chatInput = document.getElementById('cx-text-input');
+            const sendBtn = document.getElementById('cx-send-btn');
+
+            function addChatMessage(text, sender) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('cx-message', sender === 'ai' ? 'ai-message' : 'user-message');
+                msgDiv.innerText = text;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function closeChatPopup() {
+                chatPopup.classList.remove('cx-visible');
+                micContainer.classList.remove('is-active');
+            }
+
+            function toggleChat() {
+                if (chatPopup.classList.contains('cx-visible')) {
+                    closeChatPopup();
+                } else {
+                    chatPopup.classList.add('cx-visible');
+                    chatInput.focus();
+                }
+            }
+
+            micContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat();
+            });
+
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeChatPopup();
+            });
+
+            // Close when clicking outside
+            document.addEventListener('click', (event) => {
+                if (chatPopup.classList.contains('cx-visible') && !widgetWrapper.contains(event.target)) {
+                    closeChatPopup();
+                }
+            });
+            chatPopup.addEventListener('click', (e) => e.stopPropagation());
+
+            // --- VOICEFLOW LIVE API CALL ---
+            async function processUserInput(userText) {
+                if (!userText.trim()) return;
+
+                addChatMessage(userText, 'user');
+                micContainer.classList.add('is-active'); // Triggers the CSS pulse
+
+                try {
+                    const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': VOICEFLOW_API_KEY,
+                            'versionID': 'development'
+                        },
+                        body: JSON.stringify({
+                            action: {
+                                type: 'text',
+                                payload: userText
+                            }
+                        })
+                    });
+
+                    const data = await response.json();
+                    let aiResponded = false;
+
+                    for (const trace of data) {
+                        if (trace.type === 'text' || trace.type === 'speak') {
+                            const messageText = trace.payload.message;
+                            addChatMessage(messageText, 'ai');
+                            aiResponded = true;
+                        }
+                    }
+
+                    if (!aiResponded) {
+                        addChatMessage("I'm not quite sure I understand. Could you rephrase?", 'ai');
+                    }
+
+                } catch (error) {
+                    console.error("Voiceflow API Error:", error);
+                    addChatMessage("Oops! My connection to the ARRAS system dropped. Please try sending that again.", 'ai');
+                } finally {
+                    micContainer.classList.remove('is-active'); // Stop pulsing
+                }
+            }
+
+            const handleSend = () => {
+                const text = chatInput.value.trim();
+                if (text) {
+                    processUserInput(text);
+                    chatInput.value = '';
+                }
+            };
+
+            sendBtn.addEventListener('click', handleSend);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSend();
+            });
+        });
+    </script>
+</body>
+
+</html>
