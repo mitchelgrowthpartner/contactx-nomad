@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-X | AI Venue Concierge for The Far Out</title>
+    <meta name="description"
+        content="Contact-X: The autonomous venue manager demo built exclusively for The Far Out Lounge & Stage.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+    <style>
+        :root {
+            /* Far Out 70s Palette */
+            --bg-color: #2E251E;
+            /* Vintage dark roast brown */
+            --primary: #F4EFE6;
+            /* Creamy off-white */
+            --accent: #E1AA28;
+            /* The Far Out Mustard Yellow */
+            --accent-alt: #C25B36;
+            /* Burnt Orange from the sunburst */
+            --text-main: #EAE6DF;
+            --text-muted: #A8A096;
+
+            --card-bg: #3A3028;
+            /* Solid flat brown, no glass blur */
+            --border: #E1AA28;
+
+            --font-heading: 'Bebas Neue', sans-serif;
+            --font-body: 'Work Sans', sans-serif;
+
+            /* Retro Print Block Shadows */
+            --shadow-sm: 4px 4px 0px rgba(20, 16, 13, 0.8);
+            --shadow-md: 6px 6px 0px rgba(20, 16, 13, 0.9);
+            --shadow-accent: 6px 6px 0px var(--accent);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            /* Subtle grainy texture via radial gradient */
+            background-image: radial-gradient(#3A3028 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            padding-bottom: 150px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 400;
+            color: var(--primary);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            color: var(--accent);
+        }
+
+        .logo span {
+            color: var(--primary);
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-left: 14px;
+            padding-left: 14px;
+            border-left: 3px solid var(--accent-alt);
+        }
+
+        .client-badge {
+            background-color: var(--accent);
+            padding: 8px 16px;
+            border: 2px solid #14100D;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: #14100D;
+            letter-spacing: 2px;
+            box-shadow: var(--shadow-sm);
+            transform: rotate(-2deg);
+        }
+
+        .video-presentation {
+            max-width: 850px;
+            margin: 60px auto 20px auto;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border: 4px solid var(--accent);
+            box-shadow: var(--shadow-accent);
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 6rem);
+            line-height: 0.9;
+            margin-bottom: 24px;
+            color: var(--primary);
+            text-shadow: 4px 4px 0px var(--accent-alt);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--primary);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 500;
+        }
+
+        /* --- VINTAGE FLAT GMAIL SIMULATION --- */
+        .gmail-showcase {
+            max-width: 850px;
+            margin: 0 auto 80px auto;
+        }
+
+        .gmail-header-text {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gmail-header-text h2 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .gmail-window {
+            background: var(--primary);
+            /* Paper color */
+            border: 4px solid #14100D;
+            box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gmail-topbar {
+            background: var(--card-bg);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 4px solid #14100D;
+        }
+
+        .gmail-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #14100D;
+        }
+
+        .dot.red {
+            background: #FF5F56;
+        }
+
+        .dot.yellow {
+            background: #FFBD2E;
+        }
+
+        .dot.green {
+            background: #27C93F;
+        }
+
+        .gmail-subject {
+            margin-left: 24px;
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-family: var(--font-heading);
+            letter-spacing: 1px;
+        }
+
+        .gmail-body {
+            padding: 40px;
+            background: var(--primary);
+            position: relative;
+            min-height: 440px;
+        }
+
+        .email-thread {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-alt);
+            border: 2px solid #14100D;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            color: #14100D;
+            flex-shrink: 0;
+            box-shadow: 2px 2px 0px #14100D;
+        }
+
+        .email-meta {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .email-name {
+            font-weight: 600;
+            color: #14100D;
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+
+        .email-time {
+            font-size: 0.9rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .email-text {
+            color: #222;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .reply-container {
+            border: 3px solid #14100D;
+            background: #fff;
+            margin-left: 68px;
+            overflow: hidden;
+            box-shadow: 4px 4px 0px #14100D;
+        }
+
+        .reply-input-area {
+            padding: 20px;
+            min-height: 100px;
+            font-size: 1.05rem;
+            color: #14100D;
+            font-weight: 500;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background-color: var(--accent-alt);
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        .reply-actions {
+            padding: 12px 20px;
+            background: #EAE6DF;
+            border-top: 3px solid #14100D;
+            display: flex;
+            align-items: center;
+        }
+
+        .send-btn-mock {
+            background: var(--accent);
+            color: #14100D;
+            padding: 10px 28px;
+            border: 2px solid #14100D;
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            box-shadow: 2px 2px 0px #14100D;
+        }
+
+        .ai-response-block {
+            display: flex;
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .ai-avatar {
+            background: var(--accent);
+        }
+
+        .ai-text-box {
+            background: #EAE6DF;
+            border: 3px solid #14100D;
+            padding: 24px;
+            box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-text-box p {
+            margin: 0 0 14px 0;
+            color: #14100D;
+        }
+
+        .ai-text-box p:last-child {
+            margin: 0;
+        }
+
+        .ai-link {
+            color: var(--accent-alt);
+            font-weight: 600;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+        }
+
+        /* --- END GMAIL CSS --- */
+
+        .demo-pointer {
+            background: var(--accent);
+            border: 4px solid #14100D;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 0 auto 80px;
+            max-width: 700px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-pointer h2 {
+            margin-top: 0;
+            color: #14100D;
+            font-size: 2.5rem;
+        }
+
+        .demo-pointer p {
+            color: #14100D;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .bounce-arrow {
+            font-size: 3rem;
+            color: #14100D;
+            animation: bounce 2s infinite;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 3px solid #14100D;
+            padding: 40px 35px;
+            box-shadow: var(--shadow-accent);
+            transition: transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 10px 10px 0px var(--accent-alt);
+        }
+
+        .feature-card h3 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: var(--accent);
+        }
+
+        .feature-card p {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        .feature-number {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: #14100D;
+            background: var(--accent-alt);
+            padding: 4px 12px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 2px solid #14100D;
+            box-shadow: 2px 2px 0px #14100D;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 3px solid var(--card-bg);
+            font-weight: 500;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-15px);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- HYBRID VINTAGE WIDGET CSS --- */
+        #cx-widget-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            pointer-events: none;
+        }
+
+        #cx-mic-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            position: relative;
+            pointer-events: auto;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-mic-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .cx-side-box {
+            background-color: var(--card-bg);
+            border: 3px solid #14100D;
+            width: 178px;
+            box-sizing: border-box;
+            padding: 12px 10px;
+            color: var(--primary);
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            line-height: 1.1;
+            text-align: center;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cx-left {
+            padding-right: 40px;
+            margin-right: -25px;
+        }
+
+        .cx-right {
+            padding-left: 40px;
+            margin-left: -25px;
+        }
+
+        #cx-mic-wrapper {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 4px solid #14100D;
+            box-shadow: 4px 4px 0px #14100D;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cx-launcher-icon {
+            font-family: var(--font-heading);
+            font-size: 32px;
+            color: #14100D;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .is-active #cx-mic-wrapper {
+            background-color: var(--primary);
+        }
+
+        #cx-chat-popup {
+            position: relative;
+            width: 390px;
+            height: 540px;
+            max-height: 70vh;
+            background: var(--bg-color);
+            border: 4px solid #14100D;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            margin-bottom: -35px;
+            padding-bottom: 40px;
+            transform-origin: bottom center;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.2s ease-out;
+            pointer-events: none;
+        }
+
+        #cx-chat-popup.cx-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .cx-chat-header {
+            padding: 20px 24px;
+            background: var(--accent);
+            border-bottom: 4px solid #14100D;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cx-chat-header span {
+            font-family: var(--font-heading);
+            color: #14100D;
+            font-size: 1.6rem;
+            letter-spacing: 1px;
+        }
+
+        .cx-close-btn {
+            background: none;
+            border: none;
+            color: #14100D;
+            font-size: 2.5rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            font-family: var(--font-heading);
+        }
+
+        #cx-chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: var(--primary);
+        }
+
+        .cx-message {
+            padding: 14px 18px;
+            max-width: 85%;
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #14100D;
+            border: 3px solid #14100D;
+            box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.15);
+        }
+
+        .ai-message {
+            background-color: #fff;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background-color: var(--accent);
+            align-self: flex-end;
+        }
+
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            border-top: 4px solid #14100D;
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 3px solid #14100D;
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 500;
+            background-color: var(--primary);
+            color: #14100D;
+        }
+
+        #cx-text-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        #cx-send-btn {
+            background: var(--accent-alt);
+            border: 3px solid #14100D;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 0px #14100D;
+        }
+
+        .impact-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: -20px auto 70px auto;
+            flex-wrap: wrap;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .metric-pill {
+            background: var(--card-bg);
+            border: 3px solid #14100D;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-icon {
+            color: var(--accent);
+            display: flex;
+        }
+
+        .metric-text {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .metric-text span {
+            color: var(--accent);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 6px;
+            letter-spacing: 0;
+            text-transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .cx-side-box {
+                display: none;
+            }
+
+            #cx-chat-popup {
+                width: 92vw;
+                margin-bottom: 20px;
+                padding-bottom: 25px;
+            }
+
+            #cx-widget-wrapper {
+                bottom: 15px;
+            }
+
+            .gmail-showcase {
+                padding: 0 15px;
+            }
+
+            .impact-metrics {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .metric-pill {
+                width: 100%;
+                max-width: 280px;
+                justify-content: flex-start;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Contact-X <span>For The Far Out</span></div>
+            <div class="client-badge">Venue Deployment</div>
+        </header>
+
+        <main>
+            <section class="video-presentation">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/Dzo2rh8-hMQ?rel=0&modestbranding=1" allowfullscreen
+                        title="Contact-X AI Demo for The Far Out Lounge"></iframe>
+                </div>
+            </section>
+
+            <section class="hero">
+                <h1>The Autonomous Venue Concierge</h1>
+                <p>Capture high-ticket private event leads, handle ticketing FAQs, and up-sell VIP tables instantly—so
+                    your hospitality team can focus on the guest experience.</p>
+            </section>
+
+            <section class="impact-metrics">
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="metric-text">100% <span>Response Rate</span></div>
+                </div>
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="metric-text">VIP <span>Upsell Routing</span></div>
+                </div>
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="metric-text">Auto <span>Event Sync</span></div>
+                </div>
+            </section>
+
+            <section class="gmail-showcase">
+                <div class="gmail-header-text">
+                    <h2>High-Value Leads. Never Left Waiting.</h2>
+                    <p style="color: var(--primary); font-size: 1.1rem;">Watch the AI secure a private corporate booking
+                        inquiry
+                        instantly.</p>
+                </div>
+
+                <div class="gmail-window">
+                    <div class="gmail-topbar">
+                        <div class="gmail-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="gmail-subject">Re: Private Event Inquiry - Willie Stage</div>
+                    </div>
+
+                    <div class="gmail-body">
+                        <div class="email-thread">
+                            <div class="avatar">S</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">Sarah (Event Planner)</span>
+                                    <span class="email-time">8:15 PM</span>
+                                </div>
+                                <div class="email-text">
+                                    Hi Far Out team, love the venue. I'm organizing a corporate happy hour for next
+                                    month.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-wrapper" id="reply-wrapper">
+                            <div class="reply-container">
+                                <div class="reply-input-area">
+                                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                                </div>
+                                <div class="reply-actions">
+                                    <div class="send-btn-mock" id="mock-send-btn">Send</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="email-thread" id="user-sent-message" style="display: none;">
+                            <div class="avatar">S</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">Sarah (Event Planner)</span>
+                                    <span class="email-time">8:16 PM</span>
+                                </div>
+                                <div class="email-text">
+                                    Do you guys rent out the Willie Stage area? Looking for next Thursday for about 50
+                                    people.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-response-block" id="ai-response" style="display: none;">
+                            <div class="avatar ai-avatar">CX</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">Venue Concierge (AI)</span>
+                                    <span class="email-time">8:16 PM</span>
+                                </div>
+                                <div class="email-text ai-text-box">
+                                    <p>Hi Sarah! Thanks for thinking of The Far Out.</p>
+                                    <p>Yes, the Willie Stage area is available next Thursday. For a group of 50, we
+                                        offer a private sectioned-off space with dedicated bar access and an option for
+                                        food truck catering tickets. The food/beverage minimum is $1,500.</p>
+                                    <p>You can instantly lock in your date and review our catering packages here: <a
+                                            href="#" class="ai-link">Book Willie Stage Area</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="demo-pointer">
+                <h2>Live Venue AI Active</h2>
+                <p>Your custom hospitality assistant is running below. Click the widget to try asking about VIP table
+                    availability, ticketing for an upcoming show, or booking a private party.</p>
+                <div class="bounce-arrow">↓</div>
+            </section>
+
+            <section class="features">
+                <article class="feature-card">
+                    <span class="feature-number">Phase 01 / Inquiry</span>
+                    <h3>24/7 Hospitality</h3>
+                    <p>Whether a corporate planner emails at noon or a fan asks about set times at midnight, the AI
+                        responds warmly, answers FAQs, and qualifies high-value leads immediately.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 02 / VIP Upsell</span>
+                    <h3>Intelligent Routing</h3>
+                    <p>The AI knows your layout. If someone asks about a birthday party, it smoothly pitches your
+                        premium VIP cabanas or private stage areas before a human ever steps in.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 03 / Calendar</span>
+                    <h3>Instant Booking</h3>
+                    <p>Zero back-and-forth emails. Once the AI verifies the headcount and date, it pushes the lead
+                        directly to your Tripleseat or calendar system. You wake up to new events.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 04 / Experience</span>
+                    <h3>White-Glove Service</h3>
+                    <p>Upon booking, the system dispatches a beautifully branded email with parking details, food truck
+                        hours, and drink package info, setting the stage for a perfect night.</p>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 Contact-X Technologies. Designed exclusively for The Far Out Lounge & Stage.
+        </footer>
+    </div>
+
+    <div id="cx-widget-wrapper">
+        <div id="cx-chat-popup" aria-live="polite">
+            <div class="cx-chat-header">
+                <span>The Far Out Concierge</span>
+                <button class="cx-close-btn" id="cx-close-btn" aria-label="Close Chat">&times;</button>
+            </div>
+            <div id="cx-chat-messages">
+                <div class="cx-message ai-message">Welcome to The Far Out Lounge & Stage. I am your virtual concierge.
+                    Are you looking to book a private event, reserve a VIP table, or ask about an upcoming show?</div>
+            </div>
+            <div id="cx-chat-input-area">
+                <input type="text" id="cx-text-input" placeholder="Type your inquiry here..." autocomplete="off">
+                <button id="cx-send-btn" aria-label="Send message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="cx-mic-container" role="button" tabindex="0" aria-label="Open AI Concierge">
+            <div class="cx-side-box cx-left">
+                <span class="cx-status-text">Far Out AI<br>Concierge</span>
+            </div>
+            <div id="cx-mic-wrapper">
+                <div id="cx-launcher-icon">FO</div>
+            </div>
+            <div class="cx-side-box cx-right">
+                <span class="cx-status-text">VIP Tables<br>& Events</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- GSAP GMAIL SIMULATION ANIMATION ---
+            gsap.registerPlugin(TextPlugin);
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 6.5 });
+
+            tl.set("#reply-wrapper", { height: "auto", opacity: 1, display: "block" })
+                .set(".reply-container", { borderColor: "#14100D" })
+                .set("#ai-response", { opacity: 0, y: 25, display: "none" })
+                .set("#user-sent-message", { opacity: 0, height: 0, margin: 0, overflow: "hidden", display: "none" })
+                .set("#mock-send-btn", { scale: 1, backgroundColor: "#E1AA28" })
+                .set("#typing-text", { text: "" });
+
+            tl.to("#typing-text", { duration: 2.5, text: "Do you guys rent out the Willie Stage area? Looking for next Thursday for about 50 people.", ease: "none", delay: 1 })
+                .to("#mock-send-btn", { backgroundColor: "#C25B36", color: "#fff", duration: 0.2, delay: 0.4 })
+                .to("#mock-send-btn", { scale: 0.95, duration: 0.08, ease: "power1.in" })
+                .to("#mock-send-btn", { scale: 1, backgroundColor: "#E1AA28", color: "#14100D", duration: 0.1, ease: "power1.out" })
+                .to("#reply-wrapper", { opacity: 0, duration: 0.25, ease: "power2.inOut" }, "+=0.15")
+                .to("#reply-wrapper", { height: 0, margin: 0, duration: 0.4, display: "none", ease: "power3.inOut" })
+                .set("#user-sent-message", { display: "flex" })
+                .to("#user-sent-message", { height: "auto", marginBottom: "24px", opacity: 1, duration: 0.4, ease: "power2.out" }, "-=0.2")
+                .set("#ai-response", { display: "flex" })
+                .to("#ai-response", { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.5)" }, "+=0.4");
+
+            // --- VOICEFLOW API SETUP ---
+            const VOICEFLOW_API_KEY = 'VF.DM.69c6d30667950376ceb920dc.6Dxo7ooktnXv95T7';
+            const userID = 'farout_lead_' + Math.random().toString(36).substring(2, 15);
+
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+            const micContainer = document.getElementById('cx-mic-container');
+            const chatPopup = document.getElementById('cx-chat-popup');
+            const closeBtn = document.getElementById('cx-close-btn');
+            const chatMessages = document.getElementById('cx-chat-messages');
+            const chatInput = document.getElementById('cx-text-input');
+            const sendBtn = document.getElementById('cx-send-btn');
+
+            function addChatMessage(text, sender) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('cx-message', sender === 'ai' ? 'ai-message' : 'user-message');
+                msgDiv.innerText = text;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function closeChatPopup() {
+                chatPopup.classList.remove('cx-visible');
+                micContainer.classList.remove('is-active');
+            }
+
+            function toggleChat() {
+                if (chatPopup.classList.contains('cx-visible')) {
+                    closeChatPopup();
+                } else {
+                    chatPopup.classList.add('cx-visible');
+                    chatInput.focus();
+                }
+            }
+
+            micContainer.addEventListener('click', (e) => { e.stopPropagation(); toggleChat(); });
+            closeBtn.addEventListener('click', (e) => { e.stopPropagation(); closeChatPopup(); });
+            document.addEventListener('click', (event) => {
+                if (chatPopup.classList.contains('cx-visible') && !widgetWrapper.contains(event.target)) closeChatPopup();
+            });
+            chatPopup.addEventListener('click', (e) => e.stopPropagation());
+
+            async function processUserInput(userText) {
+                if (!userText.trim()) return;
+                addChatMessage(userText, 'user');
+                micContainer.classList.add('is-active');
+
+                try {
+                    const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': VOICEFLOW_API_KEY,
+                            'versionID': 'development'
+                        },
+                        body: JSON.stringify({ action: { type: 'text', payload: userText } })
+                    });
+
+                    const data = await response.json();
+                    let aiResponded = false;
+
+                    for (const trace of data) {
+                        if (trace.type === 'text' || trace.type === 'speak') {
+                            addChatMessage(trace.payload.message, 'ai');
+                            aiResponded = true;
+                        }
+                    }
+
+                    if (!aiResponded) addChatMessage("I'm having trouble connecting to the venue. Could you rephrase?", 'ai');
+                } catch (error) {
+                    console.error("Voiceflow API Error:", error);
+                    addChatMessage("Oops! My connection to the venue system dropped. Please try sending that again.", 'ai');
+                } finally {
+                    micContainer.classList.remove('is-active');
+                }
+            }
+
+            const handleSend = () => {
+                const text = chatInput.value.trim();
+                if (text) { processUserInput(text); chatInput.value = ''; }
+            };
+
+            sendBtn.addEventListener('click', handleSend);
+            chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+        });
+    </script>
+</body>
+
+</html>
