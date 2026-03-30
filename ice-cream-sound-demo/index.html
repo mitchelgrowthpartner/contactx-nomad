@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact-X | AI Studio Concierge for Ice Cream Sound</title>
+    <meta name="description"
+        content="Contact-X: The autonomous studio manager demo built exclusively for Ice Cream Sound. Instantly capture leads, route sessions, and book studio time automatically.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #050507;
+            --primary: #FFFFFF;
+            --accent: #00E5FF;
+            --accent-hover: #00B3CC;
+            --text-main: #E2E4E9;
+            --text-muted: #8E96A4;
+            --card-bg: rgba(20, 22, 30, 0.4);
+            --border: rgba(255, 255, 255, 0.08);
+
+            --font-heading: 'Outfit', sans-serif;
+            --font-body: 'Inter', sans-serif;
+
+            --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.6);
+            --shadow-lg: 0 20px 50px rgba(0, 229, 255, 0.08);
+            --glow: 0 0 20px rgba(0, 229, 255, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: radial-gradient(circle at top center, #111424 0%, var(--bg-color) 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            padding-bottom: 150px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3,
+        .logo {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        header {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--accent);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-left: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding-left: 12px;
+            border-left: 1px solid var(--border);
+        }
+
+        .client-badge {
+            background-color: rgba(0, 229, 255, 0.05);
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+            font-size: 0.85rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: var(--glow);
+        }
+
+        .video-presentation {
+            max-width: 850px;
+            margin: 60px auto 20px auto;
+            position: relative;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        /* --- PREMIUM GMAIL SIMULATION CSS --- */
+        .gmail-showcase {
+            max-width: 850px;
+            margin: 0 auto 80px auto;
+            perspective: 1200px;
+        }
+
+        .gmail-header-text {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gmail-header-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .gmail-window {
+            background: rgba(15, 16, 21, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: rotateX(3deg) translateY(0);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+        }
+
+        .gmail-window:hover {
+            transform: rotateX(0deg) translateY(-5px);
+            box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.9), 0 0 40px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .gmail-topbar {
+            background: rgba(30, 32, 40, 0.5);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gmail-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        .dot.red {
+            background: #FF5F56;
+        }
+
+        .dot.yellow {
+            background: #FFBD2E;
+        }
+
+        .dot.green {
+            background: #27C93F;
+        }
+
+        .gmail-subject {
+            margin-left: 24px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .gmail-body {
+            padding: 40px;
+            background: linear-gradient(180deg, rgba(15, 16, 21, 0) 0%, rgba(10, 11, 15, 0.4) 100%);
+            position: relative;
+            min-height: 420px;
+            /* Increased slightly to fit the extra message */
+        }
+
+        .email-thread {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2A2D3A 0%, #1A1C23 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-main);
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .email-content {
+            flex: 1;
+        }
+
+        .email-meta {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .email-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-right: 12px;
+            font-size: 1.05rem;
+        }
+
+        .email-time {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .email-text {
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Reply Box Area */
+        .reply-container {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(26, 28, 35, 0.6);
+            margin-left: 62px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+
+        .reply-input-area {
+            padding: 20px;
+            min-height: 100px;
+            font-size: 1rem;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--accent);
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+            margin-left: 2px;
+        }
+
+        .reply-actions {
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .send-btn-mock {
+            background: var(--accent);
+            color: #000;
+            padding: 10px 28px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+            transition: all 0.2s ease;
+            transform-origin: center;
+        }
+
+        /* AI Response Block */
+        .ai-response-block {
+            display: flex;
+            gap: 18px;
+            margin-top: 24px;
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+        }
+
+        .ai-avatar {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.2) 0%, rgba(0, 229, 255, 0.05) 100%);
+            color: var(--accent);
+            border: 1px solid rgba(0, 229, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
+        }
+
+        .ai-text-box {
+            background: rgba(0, 229, 255, 0.03);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            padding: 24px;
+            border-radius: 12px;
+            border-top-left-radius: 4px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-text-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.05);
+            pointer-events: none;
+        }
+
+        .ai-text-box p {
+            margin: 0 0 14px 0;
+        }
+
+        .ai-text-box p:last-child {
+            margin: 0;
+        }
+
+        .ai-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(0, 229, 255, 0.4);
+            transition: border-color 0.2s ease;
+        }
+
+        .ai-link:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* --- END PREMIUM GMAIL CSS --- */
+
+        .demo-pointer {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 40px 24px;
+            text-align: center;
+            margin: 0 auto 80px;
+            max-width: 700px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-pointer h2 {
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1.8rem;
+        }
+
+        .demo-pointer p {
+            color: var(--text-muted);
+        }
+
+        .bounce-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+            animation: bounce 2s infinite;
+            margin-top: 20px;
+            text-shadow: var(--glow);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            padding: 40px 35px;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg);
+            background: rgba(20, 22, 30, 0.7);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 300;
+            margin-bottom: 0;
+        }
+
+        .feature-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-15px);
+            }
+
+            60% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- HYBRID LUXURY WIDGET CSS --- */
+        #cx-widget-wrapper {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            pointer-events: none;
+        }
+
+        #cx-mic-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            position: relative;
+            pointer-events: auto;
+            transition: transform 0.2s ease;
+        }
+
+        #cx-mic-container:hover {
+            transform: scale(1.03);
+        }
+
+        .cx-side-box {
+            background-color: rgba(15, 16, 22, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            width: 178px;
+            box-sizing: border-box;
+            padding: 12px 10px;
+            color: var(--text-main);
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.4;
+            text-align: center;
+            white-space: nowrap;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-md);
+            transition: border-color 0.3s;
+        }
+
+        #cx-mic-container:hover .cx-side-box {
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
+        .cx-left {
+            border-radius: 22px 0 0 22px;
+            padding-right: 40px;
+            margin-right: -25px;
+        }
+
+        .cx-right {
+            border-radius: 0 22px 22px 0;
+            padding-left: 40px;
+            margin-left: -25px;
+        }
+
+        #cx-mic-wrapper {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #0A0B0E;
+            border: 2px solid var(--accent);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 229, 255, 0.2);
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        #cx-launcher-icon {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            color: var(--accent);
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -1px;
+            text-shadow: var(--glow);
+        }
+
+        .is-active #cx-mic-wrapper {
+            box-shadow: 0 0 20px 5px rgba(0, 229, 255, 0.3), inset 0 0 20px rgba(0, 229, 255, 0.4);
+            animation: softPulse 1.5s infinite alternate;
+        }
+
+        @keyframes softPulse {
+            0% {
+                box-shadow: 0 0 15px 2px rgba(0, 229, 255, 0.2);
+            }
+
+            100% {
+                box-shadow: 0 0 30px 8px rgba(0, 229, 255, 0.5);
+            }
+        }
+
+        #cx-chat-popup {
+            position: relative;
+            width: 390px;
+            height: 540px;
+            max-height: 70vh;
+            background: #0F1015;
+            border: 1px solid var(--border);
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            z-index: 10;
+            margin-bottom: -35px;
+            padding-bottom: 40px;
+            transform-origin: bottom center;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        #cx-chat-popup.cx-visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .cx-chat-header {
+            padding: 20px 24px;
+            background: #0A0B0E;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cx-chat-header span {
+            font-family: var(--font-heading);
+            color: var(--primary);
+            font-size: 1.15rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .cx-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .cx-close-btn:hover {
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        #cx-chat-messages {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            background: linear-gradient(180deg, #0F1015 0%, #0A0B0E 100%);
+        }
+
+        .cx-message {
+            padding: 14px 18px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.6;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-message {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(8px);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid var(--border);
+        }
+
+        .user-message {
+            background-color: rgba(0, 229, 255, 0.1);
+            color: var(--accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+        }
+
+        #cx-chat-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: #0A0B0E;
+            border-top: 1px solid var(--border);
+            align-items: center;
+            gap: 12px;
+        }
+
+        #cx-text-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            outline: none;
+            font-family: var(--font-body);
+            font-size: 14px;
+            background-color: #151720;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        #cx-text-input:focus {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1);
+        }
+
+        #cx-text-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #cx-send-btn {
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+        }
+
+        #cx-send-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--accent-hover);
+            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .cx-side-box {
+                display: none;
+            }
+
+            #cx-chat-popup {
+                width: 92vw;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                padding-bottom: 25px;
+            }
+
+            #cx-widget-wrapper {
+                bottom: 15px;
+            }
+
+            .gmail-showcase {
+                padding: 0 15px;
+            }
+        }
+
+        /* --- IMPACT METRICS BAR --- */
+        .impact-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: -20px auto 70px auto;
+            /* Pulls it up slightly to bridge the gap */
+            flex-wrap: wrap;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .metric-pill {
+            background: rgba(15, 16, 21, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 14px 24px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .metric-pill:hover {
+            transform: translateY(-3px);
+            border-top-color: var(--accent);
+            box-shadow: 0 10px 30px -10px rgba(0, 229, 255, 0.15);
+        }
+
+        .metric-icon {
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .metric-text {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .metric-text span {
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .impact-metrics {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .metric-pill {
+                width: 100%;
+                max-width: 280px;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="logo">Contact-X <span>For Ice Cream Sound</span></div>
+            <div class="client-badge">Studio Deployment</div>
+        </header>
+
+        <main>
+            <section class="video-presentation">
+                <div class="video-container">
+                    <section class="video-presentation">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/wuAzCMEAfjY?rel=0&modestbranding=1"
+                                allowfullscreen title="Contact-X AI Demo for Ice Cream Sound"></iframe>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="hero">
+                <h1>The Autonomous Studio Manager</h1>
+                <p>Capture every session inquiry, qualify artists across your DTLA and Echo Park locations, and book
+                    studio time instantly—so your engineers can focus on the mix.</p>
+            </section>
+            <section class="impact-metrics">
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="metric-text">100% <span>Response Rate</span></div>
+                </div>
+
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="metric-text">Instant <span>Qualification</span></div>
+                </div>
+
+                <div class="metric-pill">
+                    <div class="metric-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="metric-text">Auto <span>Calendar Sync</span></div>
+                </div>
+            </section>
+            <section class="gmail-showcase">
+                <div class="gmail-header-text">
+                    <h2>Zero Wait Time. Zero Dropped Leads.</h2>
+                    <p style="color: var(--text-muted);">Watch how the AI handles a late-night booking inquiry
+                        instantly.</p>
+                </div>
+
+                <div class="gmail-window">
+                    <div class="gmail-topbar">
+                        <div class="gmail-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <div class="gmail-subject">Re: Booking Inquiry - The Penthouse</div>
+                    </div>
+
+                    <div class="gmail-body">
+                        <div class="email-thread">
+                            <div class="avatar">J</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">James (Artist)</span>
+                                    <span class="email-time">11:42 PM</span>
+                                </div>
+                                <div class="email-text">
+                                    Hey Ice Cream Sound team! Checked out the site. Looks amazing.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="reply-wrapper" id="reply-wrapper">
+                            <div class="reply-container">
+                                <div class="reply-input-area">
+                                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                                </div>
+                                <div class="reply-actions">
+                                    <div class="send-btn-mock" id="mock-send-btn">Send</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="email-thread" id="user-sent-message" style="display: none;">
+                            <div class="avatar">J</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">James (Artist)</span>
+                                    <span class="email-time">11:43 PM</span>
+                                </div>
+                                <div class="email-text">
+                                    Do you guys have the Penthouse open this Friday at 8 PM? I need to track some
+                                    vocals.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-response-block" id="ai-response" style="display: none;">
+                            <div class="avatar ai-avatar">CX</div>
+                            <div class="email-content">
+                                <div class="email-meta">
+                                    <span class="email-name">Studio Manager (AI)</span>
+                                    <span class="email-time">11:43 PM</span>
+                                </div>
+                                <div class="email-text ai-text-box">
+                                    <p>Hi James! Thanks for reaching out.</p>
+                                    <p>Yes, the DTLA Penthouse is available this Friday at 8 PM for mixing. The rate is
+                                        $150/hr including our SSL console.</p>
+                                    <p>You can instantly lock in your slot and submit your pre-session notes here: <a
+                                            href="#" class="ai-link">Book Penthouse Session</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="demo-pointer">
+                <h2>Live Studio AI Active</h2>
+                <p>Your custom AI assistant is running below. Click the widget to try asking about the DTLA Penthouse
+                    availability, RIAA Platinum mix/mastering rates, or booking a mobile session.</p>
+                <div class="bounce-arrow">↓</div>
+            </section>
+
+            <section class="features">
+                <article class="feature-card">
+                    <span class="feature-number">Phase 01 / The Capture</span>
+                    <h3>24/7 Booking Assistant</h3>
+                    <p>You never miss a booking. Whether a label manager emails at 2:00 PM or an independent artist
+                        visits your site at midnight, the AI answers instantly, highlights your premium gear, and
+                        qualifies the lead.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 02 / The Qualification</span>
+                    <h3>Instant Session Routing</h3>
+                    <p>The AI knows your spaces. Need the Penthouse? It pitches the premium suite. Looking for mobile
+                        recording? It explains the "Bring the Studio to You" packages before you ever get on a call.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 03 / The Conversion</span>
+                    <h3>Frictionless Time Booking</h3>
+                    <p>Zero back-and-forth emails. Once the AI verifies the project scope, it books the studio time
+                        directly into your calendar. You just wake up to new sessions booked.</p>
+                </article>
+                <article class="feature-card">
+                    <span class="feature-number">Phase 04 / The Retention</span>
+                    <h3>White-Glove Onboarding</h3>
+                    <p>The second they book, the system fires off a sleek, Ice Cream Sound-branded confirmation email
+                        with directions to the studio, parking info, and pre-session instructions.</p>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            &copy; 2026 Contact-X Technologies. Designed exclusively for Ice Cream Sound Recording Studios.
+        </footer>
+    </div>
+
+    <div id="cx-widget-wrapper">
+        <div id="cx-chat-popup" aria-live="polite">
+            <div class="cx-chat-header">
+                <span>ICS Studio Manager</span>
+                <button class="cx-close-btn" id="cx-close-btn" aria-label="Close Chat">&times;</button>
+            </div>
+            <div id="cx-chat-messages">
+                <div class="cx-message ai-message">Welcome to Ice Cream Sound. I am the virtual studio manager. Are you
+                    looking to book session time in DTLA, inquire about mix/mastering, or explore our artist packages?
+                </div>
+            </div>
+            <div id="cx-chat-input-area">
+                <input type="text" id="cx-text-input" placeholder="Type your inquiry here..." autocomplete="off">
+                <button id="cx-send-btn" aria-label="Send message">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="cx-mic-container" role="button" tabindex="0" aria-label="Open AI Concierge">
+            <div class="cx-side-box cx-left">
+                <span class="cx-status-text">Ice Cream AI<br>Studio Manager</span>
+            </div>
+            <div id="cx-mic-wrapper">
+                <div id="cx-launcher-icon">IC</div>
+            </div>
+            <div class="cx-side-box cx-right">
+                <span class="cx-status-text">Book Sessions<br>& Inquiries</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- GSAP GMAIL SIMULATION ANIMATION ---
+            gsap.registerPlugin(TextPlugin);
+
+            const tl = gsap.timeline({ repeat: -1, repeatDelay: 5.5 }); // Extended delay so user can read everything before it loops
+
+            // 0. Initial Reset State for smooth looping
+            tl.set("#reply-wrapper", { height: "auto", opacity: 1, display: "block" })
+                .set(".reply-container", { borderColor: "rgba(255, 255, 255, 0.1)" })
+                .set("#ai-response", { opacity: 0, y: 25, scale: 0.98, display: "none" })
+                .set("#user-sent-message", { opacity: 0, height: 0, margin: 0, overflow: "hidden", display: "none" })
+                .set("#mock-send-btn", { scale: 1, backgroundColor: "#00E5FF" })
+                .set("#typing-text", { text: "" });
+
+            // 1. Simulate user clicking into the reply box (border highlights)
+            tl.to(".reply-container", {
+                borderColor: "rgba(0, 229, 255, 0.4)",
+                duration: 0.3,
+                ease: "power2.out",
+                delay: 1
+            })
+                // 2. Type out the message with an ease to make it feel more human
+                .to("#typing-text", {
+                    duration: 2.2,
+                    text: "Do you guys have the Penthouse open this Friday at 8 PM? I need to track some vocals.",
+                    ease: "power1.inOut"
+                })
+                // 3. Brief pause, then simulate hover on the send button
+                .to("#mock-send-btn", {
+                    backgroundColor: "#FFFFFF",
+                    boxShadow: "0 6px 20px rgba(255, 255, 255, 0.3)",
+                    duration: 0.2,
+                    delay: 0.4
+                })
+                // 4. Simulate actual click (press down - made subtle)
+                .to("#mock-send-btn", {
+                    scale: 0.95,
+                    duration: 0.08,
+                    ease: "power1.in"
+                })
+                // 5. Button release
+                .to("#mock-send-btn", {
+                    scale: 1,
+                    backgroundColor: "#00E5FF",
+                    boxShadow: "0 4px 15px rgba(0, 229, 255, 0.2)",
+                    duration: 0.1,
+                    ease: "power1.out"
+                })
+                // 6. Fade the reply box out elegantly
+                .to("#reply-wrapper", {
+                    opacity: 0,
+                    duration: 0.25,
+                    ease: "power2.inOut"
+                }, "+=0.15")
+
+                // 7. Collapse the reply box height AND simultaneously show the user's sent message
+                .to("#reply-wrapper", {
+                    height: 0,
+                    margin: 0,
+                    duration: 0.4,
+                    display: "none",
+                    ease: "power3.inOut"
+                })
+
+                // --- NEW: Slide in James's Sent Message ---
+                .set("#user-sent-message", { display: "flex" })
+                .to("#user-sent-message", {
+                    height: "auto",
+                    marginBottom: "24px",
+                    opacity: 1,
+                    duration: 0.4,
+                    ease: "power2.out"
+                }, "-=0.2") // Starts slightly before the reply box completely finishes collapsing
+
+                // 8. Pop in the AI response with a bounce
+                .set("#ai-response", { display: "flex" })
+                .to("#ai-response", {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: "back.out(1.5)"
+                }, "+=0.4"); // Half second pause after James's message appears before the AI replies
+
+            // --- VOICEFLOW DIRECT API SETUP ---
+            const VOICEFLOW_API_KEY = 'VF.DM.69c52dc32c590f9a5ceab996.ibMG0FtxNEF9yRYl';
+            const userID = 'ics_lead_' + Math.random().toString(36).substring(2, 15);
+
+            const widgetWrapper = document.getElementById('cx-widget-wrapper');
+            const micContainer = document.getElementById('cx-mic-container');
+            const chatPopup = document.getElementById('cx-chat-popup');
+            const closeBtn = document.getElementById('cx-close-btn');
+            const chatMessages = document.getElementById('cx-chat-messages');
+            const chatInput = document.getElementById('cx-text-input');
+            const sendBtn = document.getElementById('cx-send-btn');
+
+            function addChatMessage(text, sender) {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('cx-message', sender === 'ai' ? 'ai-message' : 'user-message');
+                msgDiv.innerText = text;
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function closeChatPopup() {
+                chatPopup.classList.remove('cx-visible');
+                micContainer.classList.remove('is-active');
+            }
+
+            function toggleChat() {
+                if (chatPopup.classList.contains('cx-visible')) {
+                    closeChatPopup();
+                } else {
+                    chatPopup.classList.add('cx-visible');
+                    chatInput.focus();
+                }
+            }
+
+            micContainer.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat();
+            });
+
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeChatPopup();
+            });
+
+            document.addEventListener('click', (event) => {
+                if (chatPopup.classList.contains('cx-visible') && !widgetWrapper.contains(event.target)) {
+                    closeChatPopup();
+                }
+            });
+            chatPopup.addEventListener('click', (e) => e.stopPropagation());
+
+            // --- VOICEFLOW LIVE API CALL ---
+            async function processUserInput(userText) {
+                if (!userText.trim()) return;
+
+                addChatMessage(userText, 'user');
+                micContainer.classList.add('is-active');
+
+                try {
+                    const response = await fetch(`https://general-runtime.voiceflow.com/state/user/${userID}/interact`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': VOICEFLOW_API_KEY,
+                            'versionID': 'development'
+                        },
+                        body: JSON.stringify({
+                            action: {
+                                type: 'text',
+                                payload: userText
+                            }
+                        })
+                    });
+
+                    const data = await response.json();
+                    let aiResponded = false;
+
+                    for (const trace of data) {
+                        if (trace.type === 'text' || trace.type === 'speak') {
+                            const messageText = trace.payload.message;
+                            addChatMessage(messageText, 'ai');
+                            aiResponded = true;
+                        }
+                    }
+
+                    if (!aiResponded) {
+                        addChatMessage("I'm not quite sure I understand. Could you rephrase?", 'ai');
+                    }
+
+                } catch (error) {
+                    console.error("Voiceflow API Error:", error);
+                    addChatMessage("Oops! My connection to the studio system dropped. Please try sending that again.", 'ai');
+                } finally {
+                    micContainer.classList.remove('is-active');
+                }
+            }
+
+            const handleSend = () => {
+                const text = chatInput.value.trim();
+                if (text) {
+                    processUserInput(text);
+                    chatInput.value = '';
+                }
+            };
+
+            sendBtn.addEventListener('click', handleSend);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSend();
+            });
+        });
+    </script>
+</body>
+
+</html>
