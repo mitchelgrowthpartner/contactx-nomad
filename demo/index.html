@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContactX AI | High-End Studio Automation</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgDark: '#0A0A0A',
+                        cardDark: '#111111',
+                        textGray: '#A1A1AA',
+                        textWhite: '#FFFFFF',
+                        accentBlue: '#007BFF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'subtle-pulse': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check the URL for an '?id=' or '?name=' parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const clientName = urlParams.get('id') || urlParams.get('name');
+            
+            if (clientName) {
+                // Find everywhere we put the 'personalized-name' class
+                const personalizedElements = document.querySelectorAll('.personalized-name');
+                personalizedElements.forEach(el => {
+                    // Replace the placeholder text with the URL parameter, sanitizing it to prevent XSS
+                    el.textContent = clientName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                });
+            }
+        });
+    </script>
+</head>
+<body class="bg-bgDark text-textGray font-sans antialiased selection:bg-accentBlue selection:text-white">
+
+    <header class="fixed top-0 w-full z-40 bg-bgDark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-textWhite font-bold text-xl tracking-tight">
+                [ContactX AI]
+            </div>
+            <a href="#audit" class="bg-accentBlue hover:bg-blue-600 text-white px-5 py-2.5 rounded-md transition duration-300 text-sm font-semibold shadow-[0_0_15px_-3px_rgba(0,123,255,0.4)]">
+                Book Your Free 10-Min Audit
+            </a>
+        </div>
+    </header>
+
+    <section class="pt-40 pb-20 px-6 max-w-5xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-textWhite leading-[1.1] mb-8 tracking-tight">
+            Stop Losing High-Ticket Leads While <span class="personalized-name text-white border-b-4 border-accentBlue/50 pb-1">You're</span> on Set. <br class="hidden md:block"/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-accentBlue to-blue-400 mt-4 inline-block">Automate Your Inbox.</span>
+        </h1>
+        <p class="text-lg md:text-xl text-textGray max-w-3xl mx-auto leading-relaxed">
+            The invisible AI Virtual Studio Manager for high-end creatives and commercial studios. We capture direct inquiries at 2 AM and log them into your CRM before your competitor wakes up.
+        </p>
+    </section>
+
+    <section class="max-w-5xl mx-auto px-6 mb-32">
+        <div class="text-center mb-4">
+            <h3 class="text-sm uppercase tracking-[0.2em] text-accentBlue font-bold">
+                Custom Demo Prepared For: <span class="personalized-name text-textWhite bg-white/10 px-3 py-1 rounded-md ml-2 border border-white/10">Your Studio</span>
+            </h3>
+        </div>
+        
+        <div class="relative w-full aspect-video bg-black rounded-2xl border border-white/10 shadow-[0_0_60px_-15px_rgba(0,123,255,0.4)] flex items-center justify-center overflow-hidden group">
+            
+            <iframe 
+                class="absolute inset-0 w-full h-full z-20 rounded-2xl" 
+                src="https://www.youtube.com/embed/7WOKgPM1xmk?si=SDWlpyX18CdIzbzn" 
+                title="ContactX AI Video" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerpolicy="strict-origin-when-cross-origin" 
+                allowfullscreen>
+            </iframe>
+            
+            <div class="absolute inset-0 opacity-20 z-0" style="background-image: radial-gradient(circle at center, #007BFF 1px, transparent 1px); background-size: 24px 24px;"></div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="bg-cardDark border border-white/5 p-10 rounded-2xl hover:border-accentBlue/40 transition duration-500 group">
+                <div class="w-12 h-12 bg-accentBlue/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accentBlue/20 transition">
+                    <svg class="w-6 h-6 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="text-textWhite font-bold text-xl mb-4">24/7 Inbox Monitoring</h3>
+                <p class="text-sm leading-relaxed text-textGray">
+                    Our AI reads direct inquiries, handles basic FAQs, and validates logistical data instantly.
+                </p>
+            </div>
+
+            <div class="bg-cardDark border border-white/5 p-10 rounded-2xl hover:border-accentBlue/40 transition duration-500 group">
+                <div class="w-12 h-12 bg-accentBlue/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accentBlue/20 transition">
+                    <svg class="w-6 h-6 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                </div>
+                <h3 class="text-textWhite font-bold text-xl mb-4">Instant CRM Routing</h3>
+                <p class="text-sm leading-relaxed text-textGray">
+                    Qualified leads are parsed and injected into your specific CRM (Google Sheets, HoneyBook, etc.) dynamically.
+                </p>
+            </div>
+
+            <div class="bg-cardDark border border-white/5 p-10 rounded-2xl hover:border-accentBlue/40 transition duration-500 group">
+                <div class="w-12 h-12 bg-accentBlue/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-accentBlue/20 transition">
+                    <svg class="w-6 h-6 text-accentBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
+                </div>
+                <h3 class="text-textWhite font-bold text-xl mb-4">Recovered Revenue Dashboard</h3>
+                <p class="text-sm leading-relaxed text-textGray">
+                    You get a private analytics portal to see exactly how much revenue the AI recovered that week.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="audit" class="py-32 border-t border-white/5 bg-gradient-to-b from-bgDark to-[#050505]">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-textWhite mb-6 tracking-tight">
+                Ready to stop leaking revenue at <span class="personalized-name text-accentBlue">your studio</span>?
+            </h2>
+            <p class="text-lg text-textGray mb-12 max-w-2xl mx-auto">
+                Let's spend 10 minutes looking at your current workflow and see exactly how much money your inbox is leaving on the table.
+            </p>
+            
+            <a href="#" class="inline-block bg-accentBlue text-white font-bold py-4 px-10 rounded-lg shadow-[0_0_25px_-5px_rgba(0,123,255,0.6)] hover:shadow-[0_0_40px_-5px_rgba(0,123,255,0.8)] transform hover:-translate-y-1 transition duration-300 animate-subtle-pulse">
+                Schedule Your Free Audit (10 Mins)
+            </a>
+        </div>
+    </section>
+
+    <footer class="text-center py-10 border-t border-white/5 bg-[#050505]">
+        <p class="text-xs text-textGray/60">
+            &copy; 2026 ContactX AI Automation. Optimized for Commercial Creative Studios.
+        </p>
+    </footer>
+
+    <div class="fixed bottom-6 right-6 z-50 group">
+        <div class="flex items-center gap-3 bg-cardDark border border-white/10 p-2 pl-4 rounded-full shadow-2xl hover:border-accentBlue/50 cursor-pointer transition duration-300">
+            <span class="text-textWhite text-sm font-medium tracking-wide">Chat with AI Concierge</span>
+            <div class="w-10 h-10 bg-accentBlue rounded-full flex items-center justify-center shadow-inner">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+            </div>
+        </div>
+        
+    </div>
+
+</body>
+</html>
