@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body { background-color: #0a0a0a; color: #d4d4d4; font-family: 'Courier New', Courier, monospace; }
+      .terminal-box { border: 1px solid #333; background-color: #111; }
+      .chat-window { height: 400px; overflow-y: auto; }
+      .msg-user { color: #a3a3a3; text-align: right; padding: 8px; border-bottom: 1px solid #222; }
+      .msg-ai { color: #facc15; text-align: left; padding: 8px; border-bottom: 1px solid #222; }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-thumb { background: #333; }
+    </style>
+  </head>
+  <body class="p-8">
+    <h1 class="text-2xl font-bold mb-6 tracking-widest text-white border-b border-gray-800 pb-2">CONTACT-X // QUOTATION ENGINE</h1>
+    
+    <div class="grid grid-cols-3 gap-6">
+      
+      <div class="col-span-1 terminal-box p-4">
+        <h2 class="text-sm font-bold text-gray-400 mb-4 uppercase">Latest Incoming Lead</h2>
+        <button onclick="fetchLead()" class="w-full bg-gray-800 hover:bg-gray-700 text-white p-2 text-sm mb-4 border border-gray-600">
+          [ PULL NEWEST DATA ]
+        </button>
+        <div id="leadData" class="text-xs space-y-2 whitespace-pre-wrap">Awaiting fetch...</div>
+      </div>
+
+      <div class="col-span-2 terminal-box p-4 flex flex-col">
+        <h2 class="text-sm font-bold text-gray-400 mb-4 uppercase">Gemini Engineering Interface</h2>
+        <div id="chatBox" class="chat-window mb-4 flex-grow p-2"></div>
+        
+        <div class="flex gap-2">
+          <input type="text" id="chatInput" placeholder="Command the AI (e.g. Calculate load sizing...)" 
+                 class="flex-grow bg-black border border-gray-600 text-white p-2 text-sm focus:outline-none focus:border-yellow-500">
+          <button onclick="sendChat()" class="bg-yellow-600 hover:bg-yellow-500 text-black font-bold p-2 text-sm">
+            [ EXECUTE ]
+          </button>
+        </div>
+      </div>
+      
+    </div>
+
+    <script>
+      function fetchLead() {
+        document.getElementById('leadData').innerHTML = "Fetching from database...";
+        google.script.run.withSuccessHandler(function(lead) {
+          if(!lead) {
+            document.getElementById('leadData').innerHTML = "No data found."; return;
+          }
+          let formatted = `NAME: ${lead['Full Name']}\n`;
+          formatted += `POWER AVAIL: ${lead['Average Daily Grid Power Availability']}\n`;
+          formatted += `HEAVY LOAD: ${lead['Heavy Appliances / High-Surge Loads']}\n`;
+          formatted += `BASE LOAD: ${lead['Light Appliances / Base Loads']}\n`;
+          formatted += `ROOF: ${lead['Roof Type for Panel Mounting']}`;
+          document.getElementById('leadData').innerHTML = formatted;
+        }).getLatestLead();
+      }
+
+      function sendChat() {
+        const input = document.getElementById('chatInput');
+        const text = input.value;
+        if(!text) return;
+        
+        const chatBox = document.getElementById('chatBox');
+        chatBox.innerHTML += `<div class="msg-user">${text}</div>`;
+        input.value = "Processing...";
+        input.disabled = true;
+
+        // Automatically append the lead data to the prompt for context
+        const context = document.getElementById('leadData').innerText;
+        const fullPrompt = `System context: ${context}\n\nEngineer command: ${text}`;
+
+        google.script.run.withSuccessHandler(function(response) {
+          chatBox.innerHTML += `<div class="msg-ai">${response}</div>`;
+          chatBox.scrollTop = chatBox.scrollHeight;
+          input.value = "";
+          input.disabled = false;
+          input.focus();
+        }).chatWithGemini(fullPrompt);
+      }
+    </script>
+  </body>
+</html>
